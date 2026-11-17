@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>netfold — certified papercraft net search</title>
+<style>
+  :root { --bg:#0e1116; --panel:#171c24; --ink:#e8eef6; --muted:#8fa0b5; --acc:#ffb454; --ok:#5ddba0; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:14px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace; }
+  header { padding:18px 22px 10px; border-bottom:1px solid #26303d; }
+  h1 { margin:0 0 4px; font-size:20px; letter-spacing:.5px; }
+  h1 span { color:var(--acc); }
+  .sub { color:var(--muted); }
+  main { display:grid; grid-template-columns:minmax(320px,1fr) minmax(360px,1.1fr) 300px; height:calc(100vh - 92px); }
+  #view3d { position:relative; border-right:1px solid #26303d; }
+  #view3d canvas { display:block; width:100%; height:100%; }
+  #netwrap { padding:14px; border-right:1px solid #26303d; overflow:auto; }
+  #net { width:100%; height:calc(100% - 34px); background:#0b0e13; border-radius:8px; }
+  aside { padding:14px; overflow:auto; }
+  .row { margin:0 0 8px; color:var(--muted); }
+  .row b { color:var(--ink); font-weight:600; }
+  button { background:#222b37; color:var(--ink); border:1px solid #35455a; border-radius:6px; padding:7px 9px; margin:0 6px 8px 0; cursor:pointer; font:inherit; }
+  button:hover { border-color:var(--acc); }
+  button.on { border-color:var(--acc); color:var(--acc); }
+  .ok { color:var(--ok); } .bad { color:#ff7b72; }
+  .tag { display:inline-block; border:1px solid #35455a; border-radius:4px; padding:1px 5px; color:var(--muted); font-size:12px; }
+  #status { min-height:20px; }
+</style>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
+  }
+}
+</script>
+</head>
+<body>
+<header>
+  <h1>netfold <span>·</span> certified papercraft net search</h1>
+  <div class="sub">cut along every spanning tree of the face graph · unfold isometrically · reject overlaps · minimise paper</div>
+</header>
+<main>
+  <section id="view3d" aria-label="3D mesh view"></section>
+  <section id="netwrap"><svg id="net" xmlns="http://www.w3.org/2000/svg"></svg></section>
+  <aside>
+    <div class="row">mesh <b id="meshName">—</b> <span class="tag" id="faceTag"></span></div>
+    <div>
+      <button id="prevMesh">◀ mesh</button><button id="nextMesh">mesh ▶</button>
+    </div>
+    <div>
+      <button id="modeBest" class="on">best net</button><button id="modeBfs">baseline BFS</button>
+    </div>
+    <div>
+      <button id="nextNet">next top net ▶</button>
+    </div>
+    <div class="row">trees examined <b id="examined">—</b></div>
+    <div class="row">overlap-free <b id="free">—</b></div>
+    <div class="row">bbox area <b id="area">—</b> vs BFS <b id="bfsArea">—</b></div>
+    <div class="row">paper saved <b id="gain">—</b></div>
+    <div class="row">overlap pairs <b id="ov">—</b></div>
+    <div class="row">max edge error <b id="iso">—</b></div>
+    <div class="row">net / surface area <b id="ratio">—</b></div>
+    <hr style="border-color:#26303d" />
+    <div class="row">node fingerprint <b id="nodeFp">—</b></div>
+    <div class="row">browser recompute <b id="liveFp">—</b></div>
+    <div id="status" class="ok">loading…</div>
+    <div class="sub" style="margin-top:12px">drag the 3D view to rotate. All numbers on the right are produced by the same <code>src/core.mjs</code> in node and here.</div>
+  </aside>
+</main>
+<script type="module" src="./main.js"></script>
+</body>
+</html>

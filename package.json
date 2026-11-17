@@ -1,0 +1,7 @@
+{
+  "name": "netfold",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Exhaustive spanning-tree papercraft net search with isometry and overlap certificates"
+}

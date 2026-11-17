@@ -1,0 +1,384 @@
+{
+  "generator": "tools/gen-sample.mjs",
+  "version": 1,
+  "convention": "faces are counter-clockwise from outside; positions are x,y,z triples",
+  "meshes": [
+    {
+      "name": "tetrahedron",
+      "positions": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0.5,
+        0.8660254037844386,
+        0,
+        0.5,
+        0.28867513459481287,
+        0.8
+      ],
+      "faces": [
+        [
+          0,
+          2,
+          1
+        ],
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          2,
+          0,
+          3
+        ]
+      ],
+      "surfaceArea": 1.7087477841095267,
+      "nodeFingerprint": "2b44e025b8f00239",
+      "node": {
+        "examined": 16,
+        "exhaustive": true,
+        "totalCombos": 20,
+        "overlapFreeCount": 16,
+        "bestBboxArea": 2.1533046281979797,
+        "bestTreeKey": "1,2|0,1|0,3",
+        "bestIsoRel": 2.220446049250313e-16,
+        "bfsBboxArea": 3.386842895656784,
+        "bfsOverlapCount": 0
+      }
+    },
+    {
+      "name": "square-pyramid",
+      "positions": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0.5,
+        0.5,
+        1
+      ],
+      "faces": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          0,
+          2,
+          3
+        ],
+        [
+          0,
+          1,
+          4
+        ],
+        [
+          1,
+          2,
+          4
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          3,
+          0,
+          4
+        ]
+      ],
+      "surfaceArea": 3.23606797749979,
+      "nodeFingerprint": "bc73acee83be2c10",
+      "node": {
+        "examined": 75,
+        "exhaustive": true,
+        "totalCombos": 126,
+        "overlapFreeCount": 75,
+        "bestBboxArea": 5.531475516666305,
+        "bestTreeKey": "0,1|0,2|0,4|2,4|3,4",
+        "bestIsoRel": 3.625973214694716e-16,
+        "bfsBboxArea": 7.754557740277427,
+        "bfsOverlapCount": 0
+      }
+    },
+    {
+      "name": "triangular-prism",
+      "positions": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0.5,
+        0.8660254037844386,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        1,
+        0.5,
+        0.8660254037844386,
+        1
+      ],
+      "faces": [
+        [
+          0,
+          2,
+          1
+        ],
+        [
+          3,
+          4,
+          5
+        ],
+        [
+          0,
+          1,
+          4
+        ],
+        [
+          0,
+          4,
+          3
+        ],
+        [
+          1,
+          2,
+          5
+        ],
+        [
+          1,
+          5,
+          4
+        ],
+        [
+          2,
+          0,
+          3
+        ],
+        [
+          2,
+          3,
+          5
+        ]
+      ],
+      "surfaceArea": 3.8660254037844384,
+      "nodeFingerprint": "cfc9e478c9ec76b9",
+      "node": {
+        "examined": 384,
+        "exhaustive": true,
+        "totalCombos": 792,
+        "overlapFreeCount": 384,
+        "bestBboxArea": 5.598076211353317,
+        "bestTreeKey": "1,2|0,1|3,4|3,5|0,4|1,5|2,3",
+        "bestIsoRel": 2.220446049250313e-16,
+        "bfsBboxArea": 9.263139720814413,
+        "bfsOverlapCount": 0
+      }
+    },
+    {
+      "name": "dimpled-octahedron",
+      "positions": [
+        1,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -0.2
+      ],
+      "faces": [
+        [
+          0,
+          2,
+          4
+        ],
+        [
+          2,
+          1,
+          4
+        ],
+        [
+          1,
+          3,
+          4
+        ],
+        [
+          3,
+          0,
+          4
+        ],
+        [
+          2,
+          0,
+          5
+        ],
+        [
+          1,
+          2,
+          5
+        ],
+        [
+          3,
+          1,
+          5
+        ],
+        [
+          0,
+          3,
+          5
+        ]
+      ],
+      "surfaceArea": 5.5425625842204065,
+      "nodeFingerprint": "57bcb231e13dcdc0",
+      "node": {
+        "examined": 384,
+        "exhaustive": true,
+        "totalCombos": 792,
+        "overlapFreeCount": 384,
+        "bestBboxArea": 8.640544766024076,
+        "bestTreeKey": "0,2|0,4|1,4|3,4|0,5|2,5|1,5",
+        "bestIsoRel": 2.177326487309106e-16,
+        "bfsBboxArea": 11.2327081958313,
+        "bfsOverlapCount": 0
+      }
+    },
+    {
+      "name": "corner-dent-cube",
+      "positions": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        1,
+        1,
+        1,
+        1,
+        0.4,
+        0.6,
+        0.5
+      ],
+      "faces": [
+        [
+          0,
+          2,
+          1
+        ],
+        [
+          0,
+          3,
+          2
+        ],
+        [
+          4,
+          5,
+          6
+        ],
+        [
+          4,
+          6,
+          7
+        ],
+        [
+          0,
+          1,
+          5
+        ],
+        [
+          0,
+          5,
+          4
+        ],
+        [
+          3,
+          7,
+          6
+        ],
+        [
+          3,
+          6,
+          2
+        ],
+        [
+          0,
+          4,
+          7
+        ],
+        [
+          0,
+          7,
+          3
+        ],
+        [
+          1,
+          2,
+          6
+        ],
+        [
+          1,
+          6,
+          5
+        ]
+      ],
+      "surfaceArea": 5.335362933162419,
+      "nodeFingerprint": "3e42ec6d5f3e3c7e",
+      "node": {
+        "examined": 8100,
+        "exhaustive": true,
+        "totalCombos": 31824,
+        "overlapFreeCount": 3920,
+        "bestBboxArea": 8.550925472308455,
+        "bestTreeKey": "0,2|1,2|0,3|2,3|4,5|4,6|1,5|0,5|0,4|3,6|1,6",
+        "bestIsoRel": 3.7956496765513693e-16,
+        "bfsBboxArea": 11.365282642919587,
+        "bfsOverlapCount": 1
+      }
+    }
+  ]
+}
