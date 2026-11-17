@@ -3,7 +3,7 @@
 **Promise:** for five closed triangle meshes, exhaustive search over **all** dual spanning trees (16–8,100 trees each) finds an **overlap-free**
 papercraft net whose bounding-box area is **23.08 %–39.57 % smaller** than the single breadth-first net a conventional exporter emits
 (baseline: `baseline/bfs-net.mjs`), while every face stays **isometric to 3.8e-16** relative edge error and the peeled area equals the 3D
-surface area to **2.7e-16**. The checker is one command: `node bench/verify.mjs` → **56 passed, 0 failed**.
+surface area to **3.5e-16**. The checker is one command: `node bench/verify.mjs` → **56 passed, 0 failed**.
 
 Upstream: none
 
@@ -43,7 +43,7 @@ No dependencies, no `npm install`, no bundler. Node 24 (uses only standard libra
 
 - Cold start: 5.57 / 2.55 / 4.47 / 7.96 / 200.15 ms in the same order.
 - Isometry: max independent edge-length relative error **3.80e-16** (verify recomputes lengths from the 2D polygons; core's own value agrees).
-- Area: peeled area / 3D area within **2.75e-16** (verify recomputes with Heron's formula, not core's shoelace).
+- Area: peeled area / 3D area within **3.45e-16** (verify recomputes with Heron's formula, not core's shoelace).
 - Overlap: 0 SAT pairs on all five best nets; verify's independent edge-crossing + point-containment oracle also returns 0. On the
   baseline `corner-dent-cube` net both oracles return the same 1 overlapping pair.
 - Scale: prism and dent-cube at scales **1e-6, 1e-3, 1, 1e3, 1e6** choose the same tree, stay overlap-free, and keep bbox area scaling
