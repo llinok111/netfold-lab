@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 import {
   analyzeMesh, buildTopology, unfoldTree, bfsTree, scaleMesh, meshArea,
 } from '../src/core.mjs';
+import { bfsNets } from '../baseline/bfs-net.mjs';
 
 const data = JSON.parse(readFileSync(new URL('../data/meshes.json', import.meta.url), 'utf8'));
 let pass = 0, fail = 0;
@@ -63,6 +64,10 @@ function oracleIsometry(mesh, coords) {
   return maxRel;
 }
 
+console.log('--- baseline file executes (G1) ---');
+const baselineRows = bfsNets(data);
+ok('baseline covers every mesh', baselineRows.length === data.meshes.length, `${baselineRows.length}/${data.meshes.length} rows`);
+
 console.log('--- per-mesh exhaustive net search ---');
 const results = [];
 for (const mesh of data.meshes) {
@@ -85,6 +90,8 @@ for (const mesh of data.meshes) {
   ok(`${mesh.name} peeled area = 3D area`, rel(areaFromEdges, area3) <= 1e-12, `rel ${rel(areaFromEdges, area3).toExponential(3)}`);
   ok(`${mesh.name} fingerprint stable`, a.fingerprint === mesh.nodeFingerprint, `node ${mesh.nodeFingerprint} / rerun ${a.fingerprint}`);
   ok(`${mesh.name} best no wider than BFS`, a.best.bboxArea <= a.bfs.bboxArea + 1e-12, `${a.best.bboxArea.toFixed(4)} <= ${a.bfs.bboxArea.toFixed(4)}`);
+  const brow = baselineRows.find((r) => r.mesh === mesh.name);
+  ok(`${mesh.name} baseline file reproduces BFS net`, brow.treeKey === a.bfs.treeKey && brow.bboxArea === a.bfs.bboxArea && brow.overlapCount === a.bfs.overlapCount, `bbox ${brow.bboxArea.toFixed(4)}, overlaps ${brow.overlapCount}`);
   if (a.bfs.overlapCount > 0) {
     const oo = oracleOverlapCount(a.bfs.coords);
     ok(`${mesh.name} independent oracle confirms BFS overlap`, oo === a.bfs.overlapCount, `SAT ${a.bfs.overlapCount} / oracle ${oo}`);

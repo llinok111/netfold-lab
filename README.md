@@ -3,7 +3,7 @@
 **Promise:** for five closed triangle meshes, exhaustive search over **all** dual spanning trees (16–8,100 trees each) finds an **overlap-free**
 papercraft net whose bounding-box area is **23.08 %–39.57 % smaller** than the single breadth-first net a conventional exporter emits
 (baseline: `baseline/bfs-net.mjs`), while every face stays **isometric to 3.8e-16** relative edge error and the peeled area equals the 3D
-surface area to **3.5e-16**. The checker is one command: `node bench/verify.mjs` → **56 passed, 0 failed**.
+surface area to **3.5e-16**. The checker is one command: `node bench/verify.mjs` → **62 passed, 0 failed**.
 
 Upstream: none
 
@@ -24,7 +24,7 @@ mesh, switch to the baseline BFS net, or cycle the eight best nets. The numbers 
 
 ```bash
 node tools/gen-sample.mjs          # deterministic: writes data/meshes.json
-node bench/verify.mjs              # 56 assertions, exits 0
+node bench/verify.mjs              # 62 assertions, exits 0
 node bench/bench.mjs               # writes bench/result.json
 python3 -m http.server 4173         # then open http://localhost:4173
 ```
@@ -42,9 +42,12 @@ No dependencies, no `npm install`, no bundler. Node 24 (uses only standard libra
 | dimpled-octahedron | 8 | 384 / 792 | 384 | 8.6405 | 11.2327 | **23.08 %** | 4.22 ms |
 | corner-dent-cube | 12 | 8,100 / 31,824 | 3,920 | 8.5509 | 11.3653 | **24.76 %** | 165.87 ms |
 
+- The shipped `baseline/bfs-net.mjs` is imported and executed by `bench/verify.mjs`; its tree, bbox and overlap count must match the core
+  BFS row exactly (5 extra assertions).
 - Cold start: 5.57 / 2.55 / 4.47 / 7.96 / 200.15 ms in the same order.
 - Isometry: max independent edge-length relative error **3.80e-16** (verify recomputes lengths from the 2D polygons; core's own value agrees).
-- Area: peeled area / 3D area within **3.45e-16** (verify recomputes with Heron's formula, not core's shoelace).
+- Area: peeled area / 3D area within **3.45e-16** (verify recomputes with Heron's formula, not core's shoelace; its printed worst line is
+  `peeled area = 3D area: rel 3.446e-16`, which is why this number is not a field in `result.json`).
 - Overlap: 0 SAT pairs on all five best nets; verify's independent edge-crossing + point-containment oracle also returns 0. On the
   baseline `corner-dent-cube` net both oracles return the same 1 overlapping pair.
 - Scale: prism and dent-cube at scales **1e-6, 1e-3, 1, 1e3, 1e6** choose the same tree, stay overlap-free, and keep bbox area scaling
