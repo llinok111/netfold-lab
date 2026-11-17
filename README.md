@@ -7,19 +7,6 @@ surface area to **3.5e-16**. The checker is one command: `node bench/verify.mjs`
 
 Upstream: none
 
-## What it is
-
-A papercraft tool needs a *net*: cut a closed triangle mesh along a spanning tree of its face-adjacency graph and lay every face flat.
-Any tree gives an isometric layout, but a single-pass exporter emits just one tree; our baseline does exactly that
-(`baseline/bfs-net.mjs`, deterministic BFS). On the concave `corner-dent-cube` that baseline net overlaps itself (1 SAT pair,
-confirmed by an independent edge-crossing/containment oracle). `netfold` instead enumerates every spanning tree (up to `maxCombos`),
-unfolds each one, rejects any layout with positive-area triangle overlap, and keeps the one with the smallest bounding-box area —
-less paper for the same model.
-
-The browser page shows the 3D solid (three.js, pinned 0.160.0 via importmap) and the chosen 2D net side by side. Drag to rotate; switch
-mesh, switch to the baseline BFS net, or cycle the eight best nets. The numbers on the right are recomputed **in the browser by the same
-`src/core.mjs`**, and the page compares its fingerprint with the node-baked one.
-
 ## Run it
 
 ```bash
@@ -57,14 +44,6 @@ No dependencies, no `npm install`, no bundler. Node 24 (uses only standard libra
   analysis, so a 7-sample run is dominated by timer/scheduler noise (RSD 47.9 % and 20.8 %); the median is the reported number and the
   raw p95 is in `result.json`. This is disclosed rather than smoothed.
 
-## 本轮创新
-
-**B 档：把“纸模型展开”从一次性 BFS 切割做成可审计的全枚举搜索。** 单遍导出（本仓库基线 `baseline/bfs-net.mjs`）只产生一棵
-生成树，既不检查重叠也不比较用纸面积；这里对 face-dual 图做**全枚举**（`16→8,100` 棵，组合数写在页面上），每棵都做精确等距展开
-和 SAT 重叠拒绝，再取 bbox 面积最小者，并在 node 与浏览器用同一 core 复算出同一个指纹。新在“可复算的搜索 + 双 oracle 复核”，
-不是换配色或换模型；把同一套代码换到任意三角网格仍然成立。没有做外部文献检索，因此这里只声称与本仓库基线/单遍导出的差异，
-不声称业界首创。
-
 ## Known limitations
 
 - **Relative tolerance, not absolute:** overlap is `depth <= 1e-9 × net diagonal`. Units are arbitrary; verified at 1e-6…1e6. Meshes
@@ -78,3 +57,24 @@ No dependencies, no `npm install`, no bundler. Node 24 (uses only standard libra
 - No glue tabs, no fold-angle or cut-path optimisation, no SVG export yet.
 - Browser evidence is HTTP 200 + importmap + same core recompute; no headless pixel test is run (environment forbids it), so the SVG
   layout is verified by coordinates, not by screenshot.
+
+## What it is
+
+A papercraft tool needs a *net*: cut a closed triangle mesh along a spanning tree of its face-adjacency graph and lay every face flat.
+Any tree gives an isometric layout, but a single-pass exporter emits just one tree; our baseline does exactly that
+(`baseline/bfs-net.mjs`, deterministic BFS). On the concave `corner-dent-cube` that baseline net overlaps itself (1 SAT pair,
+confirmed by an independent edge-crossing/containment oracle). `netfold` instead enumerates every spanning tree (up to `maxCombos`),
+unfolds each one, rejects any layout with positive-area triangle overlap, and keeps the one with the smallest bounding-box area —
+less paper for the same model.
+
+The browser page shows the 3D solid (three.js, pinned 0.160.0 via importmap) and the chosen 2D net side by side. Drag to rotate; switch
+mesh, switch to the baseline BFS net, or cycle the eight best nets. The numbers on the right are recomputed **in the browser by the same
+`src/core.mjs`**, and the page compares its fingerprint with the node-baked one.
+
+## 本轮创新
+
+**B 档：把“纸模型展开”从一次性 BFS 切割做成可审计的全枚举搜索。** 单遍导出（本仓库基线 `baseline/bfs-net.mjs`）只产生一棵
+生成树，既不检查重叠也不比较用纸面积；这里对 face-dual 图做**全枚举**（`16→8,100` 棵，组合数写在页面上），每棵都做精确等距展开
+和 SAT 重叠拒绝，再取 bbox 面积最小者，并在 node 与浏览器用同一 core 复算出同一个指纹。新在“可复算的搜索 + 双 oracle 复核”，
+不是换配色或换模型；把同一套代码换到任意三角网格仍然成立。没有做外部文献检索，因此这里只声称与本仓库基线/单遍导出的差异，
+不声称业界首创。
