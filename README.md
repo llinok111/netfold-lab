@@ -10,10 +10,11 @@ Upstream: none
 ## What it is
 
 A papercraft tool needs a *net*: cut a closed triangle mesh along a spanning tree of its face-adjacency graph and lay every face flat.
-Any tree gives an isometric layout, but most exporters emit the first breadth-first tree they find. On the concave `corner-dent-cube`
-that net overlaps itself (1 SAT pair, confirmed by an independent edge-crossing/containment oracle). `netfold` instead enumerates every
-spanning tree (up to `maxCombos`), unfolds each one, rejects any layout with positive-area triangle overlap, and keeps the one with the
-smallest bounding-box area — less paper for the same model.
+Any tree gives an isometric layout, but a single-pass exporter emits just one tree; our baseline does exactly that
+(`baseline/bfs-net.mjs`, deterministic BFS). On the concave `corner-dent-cube` that baseline net overlaps itself (1 SAT pair,
+confirmed by an independent edge-crossing/containment oracle). `netfold` instead enumerates every spanning tree (up to `maxCombos`),
+unfolds each one, rejects any layout with positive-area triangle overlap, and keeps the one with the smallest bounding-box area —
+less paper for the same model.
 
 The browser page shows the 3D solid (three.js, pinned 0.160.0 via importmap) and the chosen 2D net side by side. Drag to rotate; switch
 mesh, switch to the baseline BFS net, or cycle the eight best nets. The numbers on the right are recomputed **in the browser by the same
@@ -55,10 +56,11 @@ No dependencies, no `npm install`, no bundler. Node 24 (uses only standard libra
 
 ## 本轮创新
 
-**B 档：首次把“纸模型展开”做成可审计的搜索，而不是一次 BFS 切割。** 现有导出器（以及仓库里任何一次性的展开脚本）只产生一棵
+**B 档：把“纸模型展开”从一次性 BFS 切割做成可审计的全枚举搜索。** 单遍导出（本仓库基线 `baseline/bfs-net.mjs`）只产生一棵
 生成树，既不检查重叠也不比较用纸面积；这里对 face-dual 图做**全枚举**（`16→8,100` 棵，组合数写在页面上），每棵都做精确等距展开
 和 SAT 重叠拒绝，再取 bbox 面积最小者，并在 node 与浏览器用同一 core 复算出同一个指纹。新在“可复算的搜索 + 双 oracle 复核”，
-不是换配色或换模型；把同一套代码换到任意三角网格仍然成立。
+不是换配色或换模型；把同一套代码换到任意三角网格仍然成立。没有做外部文献检索，因此这里只声称与本仓库基线/单遍导出的差异，
+不声称业界首创。
 
 ## Known limitations
 
